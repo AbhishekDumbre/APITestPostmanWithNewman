@@ -13,7 +13,7 @@ jobs:
       - run:
           name: "Test Execution"
           command: newman run data/tests.json -e data/test_env.json -r cli,html
-      - store-artifacts:
+      - store_artifacts:
           path: newman/
           destination: artifacts
 
