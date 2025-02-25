@@ -1,0 +1,2306 @@
+{
+	"info": {
+		"_postman_id": "133cd069-2ff2-4432-9bee-c4ef9bc4317b",
+		"name": "Api_task3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27775077",
+		"_collection_link": "https://red-flare-803186.postman.co/workspace/myworkspace1~40148462-ae6f-41be-acfe-76b89c08248c/collection/27775077-133cd069-2ff2-4432-9bee-c4ef9bc4317b?action=share&source=collection_link&creator=27775077"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "GET_get_all_users",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_current_aunthication_users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "'Bearer {{Bearer_Token}}'",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://dummyjson.com/user/me",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST_Login_user_get_token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata=pm.response.json();\r",
+									"pm.test('status for code is',function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"pm.test('cheack the parameter type',function(){\r",
+									"    pm.expect(jsondata.id).to.be.a('number');  \r",
+									"})\r",
+									"// pm.test(\"the request methods\",function (){\r",
+									"//        pm.expect(pm.response.text()).include(\"User not found!\")\r",
+									"// })\r",
+									"pm.test(\"to cheack message\",function(){\r",
+									"    pm.expect(jsondata).to.have.property(\"username\").to.contain('emilys');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"emilys\",\r\n  \"password\": \"emilyspass\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET_search_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata=pm.response.json();\r",
+									"pm.test('to cheack the status code 200s',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the parameter type',function(){\r",
+									"pm.expect(jsondata.users[0]).to.have.property(\"firstName\").to.contain('Emily');\r",
+									"// pm.expect(jsondata).to.have.property(\"username\").to.contain('emilys');\r",
+									"pm.expect(jsondata.users[0]).to.have.property(\"firstName\").to.be.a('string');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/user/search",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "John",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_single_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('cheack a status code 200',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('to cheack the user data',function(){\r",
+									"    pm.expect(jsondata).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"firstName\").to.be.a('string');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata=pm.response.json()\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.users[0].hair).to.have.property(\"color\").to.contain('Brown');\r",
+									"    pm.expect(jsondata.users[1].hair).to.have.property(\"color\").to.contain('Brown');\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/filter?key=hair.color&value=Brown",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "hair.color"
+								},
+								{
+									"key": "value",
+									"value": "Brown"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Limit_and_skip_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to check the status code', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test('to check the data', function () {\r",
+									"    jsonData.users.forEach(user => {\r",
+									"        pm.expect(user.id).to.be.a('number');\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users?limit=5&skip=10&select=firstName,age",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "skip",
+									"value": "10"
+								},
+								{
+									"key": "select",
+									"value": "firstName,age"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sort_records_by_asc_desc",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata = pm.response.json();\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.users[0]).to.have.property(\"firstName\").to.be.a('string');\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users?sortBy=firstName&order=asc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "firstName"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_user_card_by_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.carts[0].products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/6/carts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"6",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_user_post_by_user_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata = pm.response.json();\r",
+									"pm.test('to cheack status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.posts[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/5/posts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"5",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get_uers_todos_by_user_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata).to.have.property('todos').to.be.a('Array')\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/5/todos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"5",
+								"todos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add_new_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.id).to.be.a('number');\r",
+									"    pm.environment.set('userid',jsondata.id);\r",
+									"    pm.expect(jsondata.firstName).to.be.a('string');\r",
+									"    pm.expect(jsondata.lastName).to.be.a('string')\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const name = 'Abhishe'+Math.random()*10+'as'\r",
+									"pm.environment.set(\"firstName\",'name')\r",
+									"\r",
+									"const surname='Dumnbre'+Math.random()*10+'qw'\r",
+									"pm.environment.set(\"lastName\",surname);\r",
+									"\r",
+									"const age=Math.random()*50+10;\r",
+									"pm.environment.set(\"age\",age);\r",
+									"console.log(name);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "{{firstName}}",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "{{lastName}}",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "{{age}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/users/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.lastName).to.be.a('string');\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "lastName",
+									"value": "Ddgang",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/users/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "GET_current_auth_user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "' Bearer {{Bearer_Token}}'",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://dummyjson.com/auth/me",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth_refrsh_token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"emilys\",\r\n  \"password\": \"emilyspass\",\r\n  \"expiresInMins\": 30\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bearer_Token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "emilys",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "emilyspass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://dummyjson.com/auth/login",
+							"protocol": "https",
+							"host": [
+								"dummyjson",
+								"com"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "get_all_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"\r",
+									"})\r",
+									"\r",
+									"let arr=[jsondata.products.price]\r",
+									"// for(let val of arr){\r",
+									"//     console.log(val);\r",
+									"// }\r",
+									"for(let val of jsondata.products){\r",
+									"    if(val.price>15){\r",
+									"        console.log(val);\r",
+									"    }\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products?limit=10&select=title,price",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "select",
+									"value": "title,price"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_single_product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the ',function(){\r",
+									"    pm.expect(jsondata).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"description\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"category\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"price\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"discountPercentage\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"rating\").to.be.a('number');\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the value',function(){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"description\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"category\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"discountPercentage\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"rating\").to.be.a('number');\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/search?q=phone",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "phone"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "limit_skip_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"\r",
+									"})\r",
+									"pm.test('to cheack the json data',function(){\r",
+									"    for(let i=0;i<jsondata.products.length;i++){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"\r",
+									"    }\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products?limit=10&skip=10&select=title,price",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "skip",
+									"value": "10"
+								},
+								{
+									"key": "select",
+									"value": "title,price"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sort_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"\r",
+									"})\r",
+									"pm.test('to fetch the sedans data',function(){\r",
+									"    for(let i=0;i<jsondata.products.length;i++){\r",
+									"        if(jsondata.products[i].tags[0]==\"sedans\"){\r",
+									"            console.log(jsondata.products[i]);\r",
+									"        }\r",
+									"    }\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products?sortBy=title&order=asc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "title"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_all_products_categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata[0]).to.have.property(\"slug\").to.be.a('string');\r",
+									"    pm.expect(jsondata[0]).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsondata[0]).to.have.property(\"url\").to.be.a('string');\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_all_products_category_list",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    let arr=[...jsondata]\r",
+									"    let result=arr.every(val=>typeof(val)==='string')\r",
+									"    console.log(result)\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/category-list",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"category-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_products_by_category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"description\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"category\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"\r",
+									"\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/category/smartphones",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"category",
+								"smartphones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add_new_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"pm.test('to cheack the data is',function(){\r",
+									"    pm.expect(jsondata).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"title\").to.be.a('string');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "pencil",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/products/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_the_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"description\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"category\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"price\").to.be.a('number');\r",
+									"\r",
+									"\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "blinkit",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/products/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"description\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"category\").to.be.a('string');\r",
+									"    pm.expect(jsondata).to.have.property(\"price\").to.be.a('number');\r",
+									"\r",
+									"\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/194",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"194"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cards",
+			"item": [
+				{
+					"name": "get_all_cards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.carts[0].products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.carts[0].products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.carts[0].products[0]).to.have.property(\"discountPercentage\").to.be.a('number');\r",
+									"    pm.expect(jsondata.carts[0].products[0]).to.have.property(\"thumbnail\").to.be.a('string');\r",
+									"    pm.expect(jsondata.carts[0].products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"})\r",
+									"pm.test('to fetch the data of id whose price',function(){\r",
+									"    for(let i=0;i<jsondata.carts.length;i++){\r",
+									"        for(let j=0;j<jsondata.carts[i].products.length;j++){\r",
+									"            if(jsondata.carts[i].products[j].price>30000){\r",
+									"                console.log(jsondata.carts[i].products[j])\r",
+									"\r",
+									"            }\r",
+									"\r",
+									"        }\r",
+									"    }\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/carts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_single_carts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"discountPercentage\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"thumbnail\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/carts/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gets_card_by_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test(\"to cheack the status code\",function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test(\"to cheack the data\",function(){\r",
+									"    pm.expect(jsondata).to.have.property(\"carts\").to.be.a('Array');\r",
+									"    pm.expect(jsondata).to.have.property(\"total\").to.be.a('number');\r",
+									"    pm.expect(jsondata).to.have.property(\"skip\").to.be.a('number');\r",
+									"\r",
+									"\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/carts/user/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts",
+								"user",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_new_cart",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata=pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.environment.set('cards_id',jsondata.products[0].id);\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"title\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"discountPercentage\").to.be.a('number');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"thumbnail\").to.be.a('string');\r",
+									"    pm.expect(jsondata.products[0]).to.have.property(\"price\").to.be.a('number');\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 1,\r\n    \"products\": [\r\n      {\r\n        \"id\": 144,\r\n        \"title\": \"realMe\",\r\n        \"price\": 10000,\r\n        \"quantity\": 3,\r\n        \"total\": 30000\r\n      },\r\n      {\r\n        \"id\": 98,\r\n        \"title\": \"unicornMe\",\r\n        \"price\": 65000,\r\n        \"quantity\": 1,\r\n        \"total\": 65000\r\n\r\n      }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/carts/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_carts",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"products\": [\r\n      {\r\n        \"id\": 144,\r\n        \"quantity\": 5\r\n      },\r\n      {\r\n        \"id\": 98,\r\n        \"quantity\": 2\r\n      }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/carts/:userId",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_cart",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/carts/:cards_Id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts",
+								":cards_Id"
+							],
+							"variable": [
+								{
+									"key": "cards_Id",
+									"value": "{{cards_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recipe",
+			"item": [
+				{
+					"name": "fetch_all_recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].ingredients[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].instructions[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].tags[0]).to.be.a('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let recipe=1;\r",
+									"pm.environment.set(\"recipe_id\",recipe);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes?limit=10&skip=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "skip",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_single_recipes",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.ingredients[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.instructions[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.tags[0]).to.be.a('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes/:recipe_id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								":recipe_id"
+							],
+							"variable": [
+								{
+									"key": "recipe_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search_recipe",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let recipe_name='Chicken Biryani'\r",
+									"pm.environment.set('recipe_name',recipe_name)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].ingredients[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].instructions[0]).to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes/search?q={{recipe_name}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "{{recipe_name}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Limit_skip_recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"image\").to.be.a('string');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes?limit=5&skip=10&select=name,image",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "skip",
+									"value": "10"
+								},
+								{
+									"key": "select",
+									"value": "name,image"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sort_by_recipes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].ingredients[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].instructions[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].tags[0]).to.be.a('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let sort='asc'\r",
+									"pm.environment.set('sort_parm',sort);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes?sortBy=name&order={{sort_parm}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "{{sort_parm}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_all_recipe_tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsondata = pm.response.json();\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    for(i=0;i<jsondata.length;i++){\r",
+									"        pm.expect(jsondata[i]).to.be.a('string')\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes/tags",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								"tags"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "gey_recipe_by_tag",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let tagname='Pakistani'\r",
+									"pm.environment.set(\"tag\",tagname);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].ingredients[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].instructions[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].tags[0]).to.be.a('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes/tag/{{tag}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								"tag",
+								"{{tag}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_recipes_by_meal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData.recipes[0]).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].ingredients[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].instructions[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.recipes[0].tags[0]).to.be.a('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let meal_type='snack'\r",
+									"pm.environment.set(\"meal_type\",meal_type);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes/meal-type/{{meal_type}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								"meal-type",
+								"{{meal_type}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add_recipe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.environment.set(\"Add_id_recipe\",jsonData.id);\r",
+									"   \r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let add_recipe='Tasty Pizza';\r",
+									"pm.environment.set('add_recipe_name',add_recipe)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recipes\": [\r\n        {\r\n            \"id\":51,\r\n            \"name\": \"Tasty Pizza\",\r\n            \"ingredients\": [\r\n                \r\n            ],\r\n            \"instructions\": [\r\n                \r\n            ],\r\n            \"prepTimeMinutes\": 30,\r\n            \"cookTimeMinutes\": 45,\r\n            \"servings\": 6,\r\n            \"difficulty\": \"Medium\",\r\n            \"cuisine\": \"Pakistani\",\r\n            \"caloriesPerServing\": 550,\r\n            \"tags\": [\r\n                \r\n            ],\r\n            \"userId\": 133,\r\n            \"image\": \"https://cdn.dummyjson.com/recipe-images/11.webp\",\r\n            \"rating\": 5,\r\n            \"reviewCount\": 32,\r\n            \"mealType\": [\r\n                \"Lunch\",\r\n                \"Dinner\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/recipes/add",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_recipe",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"name\": \"Butter Chicken (Murgh Makhani)\",\r\n            \"ingredients\": [\r\n                \"Chicken thighs, boneless and skinless\",\r\n                \"Yogurt\",\r\n                \"Ginger-garlic paste\",\r\n                \"Garam masala\",\r\n                \"Kashmiri red chili powder\",\r\n                \"Tomato puree\",\r\n                \"Butter\",\r\n                \"Heavy cream\",\r\n                \"Kasuri methi (dried fenugreek leaves)\",\r\n                \"Sugar\",\r\n                \"Salt to taste\"\r\n            ],\r\n            \"instructions\": [\r\n                \"Marinate chicken thighs in a mixture of yogurt, ginger-garlic paste, garam masala, and Kashmiri red chili powder.\",\r\n                \"In a pan, melt butter and sauté the marinated chicken until browned.\",\r\n                \"Add tomato puree and cook until the oil separates. Stir in heavy cream.\",\r\n                \"Sprinkle kasuri methi, sugar, and salt. Simmer until the chicken is fully cooked.\",\r\n                \"Serve this creamy butter chicken over rice or with naan for an authentic Pakistani/Indian experience.\"\r\n            ],\r\n            \"prepTimeMinutes\": 30,\r\n            \"cookTimeMinutes\": 25,\r\n            \"servings\": 4,\r\n            \"difficulty\": \"Medium\",\r\n            \"cuisine\": \"Pakistani\",\r\n            \"caloriesPerServing\": 480,\r\n            \"tags\": [\r\n                \"Butter chicken\",\r\n                \"Curry\",\r\n                \"Indian\",\r\n                \"Pakistani\",\r\n                \"Asian\"\r\n            ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/recipes/{{recipe_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								"{{recipe_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_recipe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = pm.response.json();\r",
+									"\r",
+									"pm.test('to cheack the status code',function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('to cheack the data',function(){\r",
+									"    pm.expect(jsonData).to.have.property(\"id\").to.be.a('number');\r",
+									"    pm.expect(jsonData).to.have.property(\"name\").to.be.a('string');\r",
+									"    pm.expect(jsonData.ingredients[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.instructions[0]).to.be.a('string');\r",
+									"    pm.expect(jsonData.tags[0]).to.be.a('string');\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/recipes/{{recipe_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"recipes",
+								"{{recipe_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
