@@ -14,26 +14,26 @@
   4. Postman [optional]
 
 ## Project setup
-1. Open terminal/cmd
-2. Clone repository
-    ```bash
-    git clone https://github.com/AbhishekDumbre/APITestPostmanWithNewman.git
-    ```
-3. Navigate to project directory 
-    ```bash 
-    cd APITestPostmanWithNewman
-    ```
+  1. Open terminal/cmd
+  2. Clone repository
+  ```bash
+  git clone https://github.com/AbhishekDumbre/APITestPostmanWithNewman.git
+  ```
+  3. Navigate to project directory 
+  ```bash
+  cd APITestPostmanWithNewman
+  ```
 
 
 ##  Install dependencies
-    ```bash
-    npm install newman newman-reporter-html -g
-    ```
+  ```bash
+  npm install newman newman-reporter-html -g
+  ```
 
 ## Excuation
-    ```bash
-    newman run data/tests.json -e data/test_env.json -r cli,html
-    ```
+  ```bash
+  newman run data/tests.json -e data/test_env.json -r cli,html
+  ```
 
 ## Report
    report will be generated under project repository 'newman/' folder
